@@ -9,12 +9,13 @@ function Banner(){
   
     useEffect(() => {
         async function fetchdata(){
-            const req = await axios.get(requests.fetchTrending);
+            const req = await axios.get('https://api.themoviedb.org/3'+requests.fetchTrending);
             setMovies(
                 req.data.results[
                     Math.floor(Math.random() * req.data.results.length - 1)
                 ]
             );
+            console.log("req is",req);
             return req;
         }
         fetchdata();
