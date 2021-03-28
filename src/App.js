@@ -3,13 +3,12 @@ import requests from "./requests";
 import Row from "./components/Row";
 import Banner from "./components/Banner";
 import './App.css';
+import Nav from "./components/nav";
 
 function App() {
   return (
     <div className="App">
-      <h1>
-        chal NETFLIX Clone banate Hain!!!
-      </h1>
+      <Nav /> 
       <Banner />
       <Row title = "Netflix Originals" fetchURL = {requests.fetchNetflixOriginals} islargerow={true} />
       <Row title = "Trending Now" fetchURL= {requests.fetchTrending} />

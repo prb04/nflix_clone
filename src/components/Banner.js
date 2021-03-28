@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import requests from "../requests";
+import "./banner.css"
 
 
 function Banner(){
@@ -9,7 +10,7 @@ function Banner(){
   
     useEffect(() => {
         async function fetchdata(){
-            const req = await axios.get('https://api.themoviedb.org/3'+requests.fetchTrending);
+            const req = await axios.get('https://api.themoviedb.org/3'+requests.fetchNetflixOriginals);
             setMovies(
                 req.data.results[
                     Math.floor(Math.random() * req.data.results.length - 1)
@@ -22,6 +23,11 @@ function Banner(){
     }, []);
 
     console.log(movies);
+
+    
+    function truncate(str,n) {
+    return str?.length > n ? str.substr(0,n-1) + "..." : str;
+}
     
     return(
         <header 
@@ -35,13 +41,18 @@ function Banner(){
             }}
         >
             <div className="banner-contents">
-                <h1>{movies?.title}</h1>
+                <h1 className="banner-title">{movies?.title || movies?.name || movies?.original_name}</h1>
                 <div className="banner-btns">
                     <button className="banner-btn">Play</button>
                     <button className="banner-btn">My list</button>
                 </div>
+
+                <h1 className="banner-desc"> 
+                    {truncate(movies?.overview,150)}
+                </h1>
                 {/* description */}
             </div>
+            <div className="banner-fadeBottom" />
         </header>
     );
 
