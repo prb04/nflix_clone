@@ -3,12 +3,14 @@
 import React, { useEffect, useState } from "react";
 import axios from "../axios";
 import "./row.css";
-
+import Youtube from "react-youtube";
+import movieTrailer from "movie-trailer";
 
 const baseURL =  "https://image.tmdb.org/t/p/original/";
 
 function Row (props) {
     const [movies, setMovies] = useState([]);
+    const [trailerurl,setTrailerurl] = useState("");
 
     useEffect(() => {
 
@@ -20,11 +22,35 @@ function Row (props) {
             
         fetchdata();
 
-    }, [props.fetchURL]);   
+    }, [props.fetchURL]);
+    
+    const opts = {
+        height: '390',
+        width: '100%',
+        playerVars: {
+          // https://developers.google.com/youtube/player_parameters
+          autoplay: 1,
+        },
+    };
+
+    function handleClick(movie){
+        if(trailerurl){
+            setTrailerurl('');
+        }else{
+            movieTrailer(movie?.name || "")
+            .then((url) => {
+                 const urlparams = new URLSearchParams(new URL(url).search)
+                 setTrailerurl(urlparams.get("v"));
+            })
+            .catch((error) => console.log(error));
+        }
+    };
+ 
+
 
 
     return(
-        <div className="row" >
+        <div className="row">
             <h2>{props.title}</h2>
 
             <div className="row-poster">
@@ -32,6 +58,7 @@ function Row (props) {
                     (
                         <img
                             key = {x.id} 
+                            onClick={handleClick}
                             className={`row-posters ${props.islargerow && "rowposterlarge"}`} 
                             src={`${baseURL}${props.islargerow?x.poster_path:x.backdrop_path}`} 
                             alt = {x.name} />
@@ -39,6 +66,7 @@ function Row (props) {
                 )}
 
             </div>
+            {trailerurl && <Youtube videoid={trailerurl} opts = {opts} />}
         </div>
     )
 }

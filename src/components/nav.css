@@ -2,11 +2,17 @@
     position: fixed;
     top:0;
     width: 100%;
+    z-index: 1;
     display: flex;
     justify-content: space-between ;
-    padding: 20px;
-    height: 30px;
-    background-color: black;
+    height: 40px;
+
+    transition-timing-function: ease-in;
+    transition: all 0.7s;
+}
+
+.nav-black{
+    background-color: #111;
 }
 
 .nav-logo{
@@ -14,13 +20,13 @@
     left: 20px;
     width: 100px;
     object-fit: contain;
-    top: 10px;
+    top: 5px;
 }
 .nav-avatar{
     position: fixed;
-    width: 50px;
+    width: 35px;
     object-fit: contain;
     right:20px;
-    top: 5px;
+    top: 0px;
     
 }
